@@ -8,7 +8,7 @@ st.set_page_config(page_title="ISL 2021-22 Dashboard", page_icon=":soccer:", lay
 
 @st.cache
 def get_data():
-    df = pd.read_csv('C:/Users/joyan/ISL_league_stage.csv')
+    df = pd.read_csv('ISL_league_stage.csv')
     return df
 
 def make_radar(df,params):
