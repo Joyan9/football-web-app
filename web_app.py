@@ -4,7 +4,7 @@ import streamlit as st  # pip install streamlit
 from soccerplots.radar_chart import Radar
 
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="ISL 2021-22 Dashboard", page_icon=":soccer:", layout="wide")
+st.set_page_config(page_title="ISL 2021-22", page_icon=":soccer:", layout="wide")
 
 @st.cache
 def get_data():
@@ -72,7 +72,7 @@ df = get_data()
 #----SIDEBAR----
 st.sidebar.header("Please select 2 teams for comparision:")
 team = st.sidebar.multiselect(
-    "Select the teams:",
+    "Select teams:",
     options=df["team"].unique(),
     default=['Hyderabad FC','ATK Mohun Bagan FC']
 )
@@ -82,9 +82,9 @@ color_2 = st.sidebar.color_picker('Pick Color for team 2', '#00f999')
 
 df_team_selection = df.query("team == @team")
 
-st.sidebar.header("Please select the parameters(optimum value = 9):")
+st.sidebar.header("Please select the parameters (optimum value 9):")
 params = st.sidebar.multiselect(
-    "Select the params:",
+    "Select params:",
     options=df.columns,
     default = ['team','goals','xG','goals_conceded','xGA','shots',
                'shots_against','xPoints','xG_per_shot','xGA_per_shot']
@@ -101,4 +101,5 @@ st.write('Right click and press "Save image as..." to download image')
 st.markdown("""---""")
 col = st.columns(1)
 st.pyplot(fig=make_radar(df_team_selection,params))
+st.dataframe(get_data())
 st.write("Made by Joyan Bhathena, joyansbhathena@gmail.com")
