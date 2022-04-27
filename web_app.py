@@ -106,13 +106,6 @@ col = st.columns(1)
 st.pyplot(fig=make_radar(df_team_selection,params))
 
 st.title("Full database")
-csv = convert_df(df)
-st.download_button(
-     label="Download data as CSV",
-     data=csv,
-     file_name='ISL_league_stage_2021-22_data.csv',
-     mime='text/csv',
- )
 st.dataframe(df)
 
 st.write("Made by Joyan Bhathena, joyansbhathena@gmail.com")
