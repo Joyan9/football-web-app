@@ -11,6 +11,9 @@ def get_data():
     df = pd.read_csv('ISL_league_stage.csv')
     return df
 
+def convert_df(df):
+     return df.to_csv().encode('utf-8')
+
 def make_radar(df,params,color_1='red',color_2='white'):
     df.reset_index(inplace=True)
     ranges = []
@@ -101,5 +104,15 @@ st.write('Right click and press "Save image as..." to download image')
 st.markdown("""---""")
 col = st.columns(1)
 st.pyplot(fig=make_radar(df_team_selection,params))
-st.dataframe(get_data())
+
+st.title("Full database")
+csv = convert_df(df)
+st.download_button(
+     label="Download data as CSV",
+     data=csv,
+     file_name='ISL_league_stage_2021-22_data.csv',
+     mime='text/csv',
+ )
+st.dataframe(df)
+
 st.write("Made by Joyan Bhathena, joyansbhathena@gmail.com")
