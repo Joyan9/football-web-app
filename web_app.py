@@ -11,7 +11,7 @@ def get_data():
     df = pd.read_csv('ISL_league_stage.csv')
     return df
 
-def make_radar(df,params):
+def make_radar(df,params,color_1='red',color_2='white'):
     df.reset_index(inplace=True)
     ranges = []
     params = params[1:]
@@ -43,9 +43,9 @@ def make_radar(df,params):
 
     title = dict(
     title_name=df['team'][0],
-    title_color = 'red',
+    title_color = color_1,
     title_name_2= df['team'][1],
-    title_color_2 = 'blue',
+    title_color_2 = color_2,
     title_fontsize = 18)
 
     endnote = '@BhathenaJoyan\ndata via Fotmob.com'
@@ -58,9 +58,11 @@ def make_radar(df,params):
                   range_color='#FFFFFF')
 
     fig,ax = radar.plot_radar(ranges=ranges,params=params,values=values,
-                             radar_color=['red','blue'],
+                             radar_color=[color_1,color_2],
                              alphas=[.75,.60],title=title,endnote=endnote,
                              compare=True)
+
+    
     return fig
 
 
@@ -75,6 +77,9 @@ team = st.sidebar.multiselect(
     default=['Hyderabad FC','ATK Mohun Bagan FC']
 )
 
+color_1 = st.sidebar.color_picker('Pick Color for team 1', '#00f900')
+color_2 = st.sidebar.color_picker('Pick Color for team 2', '#00f999')
+
 df_team_selection = df.query("team == @team")
 
 st.sidebar.header("Please select the parameters(optimum value = 9):")
@@ -87,25 +92,13 @@ params = st.sidebar.multiselect(
 
 df_param_selection = df_team_selection[params]
 # ---- MAINPAGE ----
-st.title(":bar_chart: ISL Dashboard")
+st.title(":bar_chart: ISL 2021-22 Team Comparision App")
 st.markdown("##")
 st.dataframe(df_team_selection)
-# # # TOP KPI's
-# total_goals = int(df_team_selection["goals"].sum())
-# parameter = df_param_selection.values
-# average_xG = round(df_team_selection["xG"].mean()/20, 2)
 
-# left_column, middle_column, right_column = st.columns(3)
-# with left_column:
-#     st.subheader("Total Goals:")
-#     st.subheader(f"{total_goals:,}")
-# with middle_column:
-#     st.subheader(f"{params}")
-#     st.subheader(f"{parameter}")
-# with right_column:
-#     st.subheader("Average xG per match:")
-#     st.subheader(f"{average_xG}")
 st.title(":dart: Radar Plot")
+st.write('Right click and press "Save image as..." to download image')
 st.markdown("""---""")
 col = st.columns(1)
 st.pyplot(fig=make_radar(df_team_selection,params))
+st.write("Made by Joyan Bhathena, joyansbhathena@gmail.com")
