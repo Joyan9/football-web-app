@@ -103,7 +103,7 @@ st.title(":dart: Radar Plot")
 st.write('Right click and press "Save image as..." to download image')
 st.markdown("""---""")
 col = st.columns(1)
-st.pyplot(fig=make_radar(df_team_selection,params))
+st.pyplot(fig=make_radar(df_team_selection,params,color_1,color_2))
 
 st.title("Full database")
 st.dataframe(df)
