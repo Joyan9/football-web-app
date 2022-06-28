@@ -79,15 +79,16 @@ team = st.sidebar.multiselect(
     options=df["team"].unique(),
     default=['Hyderabad FC','ATK Mohun Bagan FC']
 )
+st.sidebar.header("Team 1 will be the team which comes first alphabetically, refer data table for reference")
+color_1 = st.sidebar.color_picker('Pick Color for team 1', '#ffffff')
+color_2 = st.sidebar.color_picker('Pick Color for team 2', '#ffff00')
 
-color_1 = st.sidebar.color_picker('Pick Color for team 1', '#00f900')
-color_2 = st.sidebar.color_picker('Pick Color for team 2', '#00f999')
 
 df_team_selection = df.query("team == @team")
 
 st.sidebar.header("Please select the parameters (optimum value 9):")
 params = st.sidebar.multiselect(
-    "Select params:",
+    "Select params (Please do not unselect 'team'):",
     options=df.columns,
     default = ['team','goals','xG','goals_conceded','xGA','shots',
                'shots_against','xPoints','xG_per_shot','xGA_per_shot']
